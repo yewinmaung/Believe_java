@@ -1,0 +1,185 @@
+*{
+    font-family: "Times New Roman",'SansSerif';
+}
+body{
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+.hovcol1{
+    transition: 1s;
+}
+.hovcol1:hover{
+    transform: scale(1.5);
+}
+.hovcol:hover{
+    color:rgb(0, 0, 139)!important;
+}
+.nav-bg{
+    background-color: #b4951a;
+}
+.text-col{
+    color: #ffd329 !important;
+}
+.btn-border{
+    border: 1px solid #ffd329 !important;
+    border-radius: 5px !important;
+    color:  #ffd329 !important;
+}
+.carousel-btn-border{
+    border: 1px solid #ffd329 !important;
+    border-radius: 5px !important;
+    color:  #ffd329 !important;
+}
+.carousel-btn-border:target{
+    box-shadow:10px 10px 5px lightblue;
+
+}
+.text-col1{
+    color: rgb(0, 0, 139);
+}
+.own_bg{
+    background-color: rgba(0, 0, 139, 0.95);
+}
+#myVideo {
+
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.content {
+
+    position: absolute;
+    bottom: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 50%;
+    padding: 20px;
+}
+
+.image-bg{
+    background-image: linear-gradient(rgba(0, 0, 139, 0.89), rgba(0, 0, 139, 0.89)),url("../data/PNG/Artboard 1.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-attachment: fixed;
+}
+.image-bg1{
+    background-image: linear-gradient(rgba(0, 0, 139, 0.85), rgba(0, 0, 139, 0.83)),url("../data/img/about2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:100%;
+    background-attachment: fixed;
+}
+.image-bg2{
+    background-image: linear-gradient(rgba(0, 0, 139, 0.88), rgba(0, 0, 139, 0.9));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-attachment: fixed;
+}
+.carousel-btn{
+    color: rgba(255, 211, 41, 0.98);
+    background-color: rgba(0, 0, 139, 0.88);
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 211, 41, 0.98' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.new-bg{
+    background-image:linear-gradient(#d9d6d6, #fdecd7);
+}
+.new-font-color{
+    background-color:rgba(0, 0, 139, 0.88);
+}
+.profile-card {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: -47px;
+}
+.base-footer{
+    color: #d9d9d9;
+
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    background-image: linear-gradient(rgba(0, 0, 139, 0.88), rgba(0, 0, 139, 0.79)),url("../data/img/bg-footer2.jpg");
+    background-size: cover;
+
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+/*Enroll*/
+.enroll-min-bg{
+    background-image: url("../data/img/enroll-bg.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgb(242, 235, 252);
+}
+.course-scroll{
+    background-color: coral;
+    width: 200px;
+    height: 100px;
+    border: 1px solid black;
+    overflow: scroll;
+}
+.collap-btn{
+    color: rgba(0, 0, 139, 0.88);
+    border: 3px solid rgba(255, 211, 41, 0.98);
+    padding: 20px;
+    font-size: large;
+    text-decoration: none;
+
+}
+.collap-btn:hover{
+    color: rgba(255, 211, 41, 0.98);
+    background-color:rgba(0, 0, 139, 0.88) ;
+}
+/*select*/
+
+.dropdown ul{
+   background-color:rgba(0, 0, 139, 0.88)!important; ;
+}
+.dropdown ul li a{
+    color: rgba(255, 211, 41, 0.98)!important;
+}
+.dropdown ul li a:hover{
+    color: rgba(255, 211, 41, 0.98)!important;
+    background-color: rgba(10, 88, 202, 0.89)!important;
+}
+.icon{
+    width: 20px!important;
+}
+.certificate_format{
+    width: 224px;
+    height: 123px;
+    transition: 1s;
+}
+.certificate_format:active{
+  transform: scale(2.5);
+   z-index: 100;
+
+}
+.form-select{
+    color: rgba(255, 211, 41, 0.98)!important;
+    background-color: rgba(0, 0, 139, 0.88)!important;
+}
+.form-select:focus{
+    color: rgba(255, 211, 41, 0.98)!important;
+    background-color: rgba(0, 0, 139, 0.88)!important;
+}
+.form-select option{
+    color: rgba(255, 211, 41, 0.98)!important;
+    background-color: rgba(0, 0, 139, 0.88)!important;
+}
+.img-with{
+    width: 100px!important;
+}
+.rm a{
+    color: darkgoldenrod;
+    font-weight: bolder;
+}
+@media screen and (max-width: 800px) {
+    
+}
