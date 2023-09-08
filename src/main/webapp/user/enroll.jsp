@@ -17,7 +17,7 @@
 <body>
 <%
 	User user = (User) session.getAttribute("user");
-
+    
 	String name = (String) session.getAttribute("name");
 	%>
 	<header class="container-fluid position-fixed own_bg"
@@ -59,7 +59,11 @@
 															<div class="dropdown">
 																	<a class="dropdown-toggle btn btn-outline-warning mb-1" href="#" role="button"
 																		id="dropdownMenuLink" data-bs-toggle="dropdown"
-																		aria-expanded="false"> <%=user.getName()%>
+																		aria-expanded="false"> 
+																		<img
+																		src="<%=request.getContextPath()%>/upload_images/${user.img}"
+																		width="50" height="50" class="rounded-circle" />
+																		<%=user.getName()%>
 																	</a>
 																	<ul class="dropdown-menu"
 																		aria-labelledby="dropdownMenuLink">
@@ -94,9 +98,9 @@
 											</div>
 										   
                                             <nav aria-label="breadcrumb" style="background-color:rgba(5, 5, 154, 0.86)!important;">
-                                                <ol class="breadcrumb new-font-color p-2" style="width: 230px;">
-                                                    <li class="breadcrumb-item "><a href="index.jsp" class="text-col text-decoration-none">Home</a></li>
-                                                   <li class="breadcrumb-item active text-col" aria-current="page">Essential-Networking</li>
+                                                <ol class="breadcrumb new-font-color p-2" style="width: 130px;">
+                                                    <li class="breadcrumb-item "><a href="<%=request.getContextPath()%>/UserClassShowServlet" class="text-col text-decoration-none">Home</a></li>
+                                                   <li class="breadcrumb-item active text-col" aria-current="page">Enroll</li>
                                                 </ol>
                                             </nav>
 										</div>
@@ -112,7 +116,7 @@
 		</div>
 	</header>
 
-<div class="h-100 w-50" style="padding-top: 8%;"></div>
+<div class="h-100 w-50" style="padding-top: 10%;"></div>
 <section class="">
     <div class="container-fluid enroll-min-bg min-vh-100">
         <div class="col-12">

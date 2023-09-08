@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +36,21 @@ public class UserLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		//UserAccess ua = new UserAccess();
+		
+//		PrintWriter out = response.getWriter();
+//        User user=(User)request.getAttribute("user");
+//        System.out.println("User uls"+user);
+//		//boolean isValid = ua.isValid(email, password);
+//		response.setContentType("text/html");
+//		RequestDispatcher rd;
+//		HttpSession session = request.getSession(true);
+//		
+//		session.setAttribute("user", user);
+//		 rd = request.getRequestDispatcher("user/index.jsp");
+//		rd.include(request, response);
+
 	}
 
 	/**
@@ -51,37 +65,45 @@ public class UserLoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		UserAccess ua = new UserAccess();
 		PrintWriter out = response.getWriter();
+
 		User user = ua.loginUser(email, password);
 		boolean isValid = ua.isValid(email, password);
+
 		int type = 0;
 
 		HttpSession session = request.getSession(true);
 
 		if (isValid) {
-		
-          System.out.println(user);
+
 			if (user.getType() == 0) {
-				
+
 				session.setAttribute("user", user);
-				RequestDispatcher rd = request.getRequestDispatcher("user/index.jsp");
-				rd.forward(request, response);
+				response.setContentType("text/html");
+				response.sendRedirect("UserClassShowServlet");
+				//RequestDispatcher rd = request.getRequestDispatcher("user/index.jsp");
+				//rd.forward(request, response);
+
 			} else if (user.getType() == 1) {
 				session.setAttribute("admin", user);
-				
+
 				RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
 				rd.forward(request, response);
 
-			} 
+			}
 
 		}
 
 		else {
 
 			response.setContentType("text/html");
-			RequestDispatcher rd = request.getRequestDispatcher("user/login.jsp");
+			RequestDispatcher rd;
+
 			request.setAttribute("userError", "error");
-			rd=request.getRequestDispatcher("admin/alogin.jsp");
-			request.setAttribute("adminError","error");
+			rd = request.getRequestDispatcher("user/login.jsp");
+			rd.include(request, response);
+
+			request.setAttribute("adminError", "error");
+			rd = request.getRequestDispatcher("admin/alogin.jsp");
 			rd.include(request, response);
 		}
 

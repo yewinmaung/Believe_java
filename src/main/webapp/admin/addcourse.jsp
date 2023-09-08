@@ -80,7 +80,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/bankAccount.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
@@ -125,11 +125,15 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false"> <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false">
+											<img
+																		src="<%=request.getContextPath()%>/upload_images/${admin.img}"
+																		width="50" height="50" class="rounded-circle" />
+											 <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/user/profile.jsp">Profile</a></li>
+												href="<%=request.getContextPath()%>/admin/profile.jsp">Profile</a></li>
 											<li><a class="dropdown-item"
 												href="<%=request.getContextPath()%>/UserLogoutServlet">Logout</a></li>
 										</ul>

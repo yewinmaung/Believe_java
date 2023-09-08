@@ -12,43 +12,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
 import model.User;
 import model.UserAccess;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-		maxFileSize = 1024 * 1024 * 10, // 10 MB
-		maxRequestSize = 1024 * 1024 * 100 // 100 MB
+maxFileSize = 1024 * 1024 * 10, // 10 MB
+maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
 /**
- * Servlet implementation class ProfileServlet
+ * Servlet implementation class AdminChgProfileServlet
  */
-@WebServlet("/ProfileServlet")
-public class ProfileServlet extends HttpServlet {
+@WebServlet("/AdminChgProfileServlet")
+public class AdminChgProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AdminChgProfileServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public ProfileServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		String fileFolder = "upload_images";
@@ -65,7 +63,8 @@ public class ProfileServlet extends HttpServlet {
 		String fileName = extractFileName(part);
 		String password = request.getParameter("pw");
 		String confirm = request.getParameter("confirm");
-		System.out.println(name+"Img "+fileName+"Pw"+password+"Confirm"+confirm);
+		
+		System.out.println(name+" adminImg "+fileName+"Pw"+password+"Confirm"+confirm);
 		 System.out.println(password.equals(confirm));
 		 HttpSession session = request.getSession(true);
 		UserAccess ua=new UserAccess();
@@ -73,18 +72,18 @@ public class ProfileServlet extends HttpServlet {
 			User ur=ua.changeProfile(name,fileName, password, id);
 			 
 			User user=ua.selectUser(id);
-			session.setAttribute("user", user);
+			session.setAttribute("admin", user);
 			response.setContentType("text/html");
 			request.setAttribute("aung", "aung");
 			//response.sendRedirect("UserLoginServlet");
-			 RequestDispatcher rd=	request.getRequestDispatcher("user/profile.jsp");
+			 RequestDispatcher rd=	request.getRequestDispatcher("admin/profile.jsp");
 		     rd.forward(request, response);
 		 }
 		else {
 			
 			response.setContentType("text/html");
 			request.setAttribute("onError", "error");
-		   RequestDispatcher rd=request.getRequestDispatcher("user/profile.jsp");
+		   RequestDispatcher rd=request.getRequestDispatcher("admin/profile.jsp");
 			rd.include(request, response);
 		}
 		
@@ -103,5 +102,6 @@ public class ProfileServlet extends HttpServlet {
 		}
 		return null;
 	}
+	}
 
-}
+

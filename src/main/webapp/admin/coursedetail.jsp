@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.User"%>
 <%@page import="model.Course"%>
+<%@page import="model.Category"%>
 <%@page import="model.CourseAccess"%>
 <!DOCTYPE html>
 <html>
@@ -32,8 +33,16 @@
 	User admin = (User) session.getAttribute("admin");
 	Course course = new Course();
 	CourseAccess ca = new CourseAccess();
-	String courseId = request.getParameter("courseid");
+	int courseId = Integer.parseInt(request.getParameter("courseid"));
 
+	//course = ca.courseData(courseId);
+	//System.out.print("CD"+courseId);
+	//Course course = request.getAttribute("course");
+	//CourseAccess ca = new CourseAccess();
+
+	//int courseId = Integer.parseInt(request.getParameter("courseid"));
+	// Category cat = ca.showClassobj(courseId);
+	//System.out.print(cat.getTitle());
 	//String name = (String) session.getAttribute("Admin");
 	%>
 	<section class="main container-fluid min-vh-100">
@@ -81,7 +90,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/bankAccount.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
@@ -130,11 +139,13 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false"> <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false"> <img
+											src="<%=request.getContextPath()%>/upload_images/${admin.img}"
+											width="50" height="50" class="rounded-circle" /> <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/user/profile.jsp">Profile</a></li>
+												href="<%=request.getContextPath()%>/admin/profile.jsp">Profile</a></li>
 											<li><a class="dropdown-item"
 												href="<%=request.getContextPath()%>/UserLogoutServlet">Logout</a></li>
 										</ul>
@@ -171,21 +182,25 @@
 									<form class="form-group" method="post"
 										action="<%=request.getContextPath()%>/UpdateCourseServlet"
 										enctype="multipart/form-data">
+
+										<input type="hidden" value="${course.id }" name="courseid">
+
 										<c:if test="${not empty courseErrorexist}">
 											<div class="alert alert-danger ">This Lecture is Exist!</div>
 										</c:if>
 										<div>
-										<img src="<%=request.getContextPath()%>/upload_images/${course.img}" class="rounded-circle" width="90"
-									height="90" />
+											<img
+												src="<%=request.getContextPath()%>/upload_images/${course.img}"
+												class="rounded-circle" width="90" height="90" />
 										</div>
 										<div class="row my-3">
 											<div class="col-md-12 col-12">
-												<input required type="text" value="${course.name }" name="name" class="form-control"
-													placeholder="Name">
+												<input required type="text" value="${course.name }"
+													name="name" class="form-control" placeholder="Name">
 
 											</div>
 											<div class="col-md-4 my-3">
-										  <!-- 		<select required class="form-select" name="type">
+												<!-- 		<select required class="form-select" name="type">
 												
 												<option selected disabled value="${course.type }"  ${course.type } ? 'selected="selected"' : ''>${course.type}</option>
 												
@@ -195,11 +210,12 @@
 													<option value="Accounting">Accounting</option>
 
 												</select> -->
-													<select required class="form-select" name="type">
-												<c:forEach var="items" items="${categorylist}">
-												
-												<option value="${items.id}">${items.title}</option>
-												</c:forEach>
+												<select required class="form-select" name="type">
+													<c:forEach var="items" items="${categorylist}">
+
+														<option value="${items.id}"
+															${items.id==course.type ? 'selected="selected"' : ''}>${items.title}</option>
+													</c:forEach>
 												</select>
 											</div>
 
@@ -208,8 +224,8 @@
 													placeholder="Image">
 											</div>
 											<div class="col-md-12 col-12 mt-2">
-												<input required type="text" value="${course.link }" name="link" class="form-control"
-													placeholder="Lecture Link">
+												<input required type="text" value="${course.link }"
+													name="link" class="form-control" placeholder="Lecture Link">
 											</div>
 										</div>
 										<div

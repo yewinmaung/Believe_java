@@ -2,13 +2,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="model.User"%>
+<%@page import="model.CourseAccess"%>
+<%@page import="model.Category"%>
 
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Believe Learning Center</title>
-<link rel="icon" href="<%=request.getContextPath()%>/data/PNG/Artboard%201.png">
+<link rel="icon"
+	href="<%=request.getContextPath()%>/data/PNG/Artboard%201.png">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -22,6 +27,9 @@
 <body>
 	<%
 	User user = (User) session.getAttribute("user");
+	//CourseAccess ca = new CourseAccess();
+
+	// System.out.print("User Img"+user.getImg());
 
 	//String name = (String) session.getAttribute("name");
 	%>
@@ -81,9 +89,11 @@
 															<li class="nav-item w-50 text-center align-items-center">
 
 																<div class="dropdown">
-																	<a class="dropdown-toggle btn btn-outline-warning mb-1" href="#" role="button"
-																		id="dropdownMenuLink" data-bs-toggle="dropdown"
-																		aria-expanded="false"> <%=user.getName()%>
+																	<a class="dropdown-toggle btn btn-outline-warning mb-1"
+																		href="#" role="button" id="dropdownMenuLink"
+																		data-bs-toggle="dropdown" aria-expanded="false"> <img
+																		src="<%=request.getContextPath()%>/upload_images/${user.getImg()}"
+																		width="50" height="50" class="rounded-circle" /> <%=user.getName()%>
 																	</a>
 																	<ul class="dropdown-menu"
 																		aria-labelledby="dropdownMenuLink">
@@ -99,9 +109,11 @@
 															<li class="nav-item w-50 text-center align-items-center">
 
 																<div class="dropdown">
-																	<a class=" dropdown-toggle btn btn-outline-warning mb-2" href="#" role="button"
-																		id="dropdownMenuLink" data-bs-toggle="dropdown"
-																		aria-expanded="false"> SignUp/Login </a>
+																	<a
+																		class=" dropdown-toggle btn btn-outline-warning mb-2"
+																		href="#" role="button" id="dropdownMenuLink"
+																		data-bs-toggle="dropdown" aria-expanded="false">
+																		SignUp/Login </a>
 																	<ul class="dropdown-menu"
 																		aria-labelledby="dropdownMenuLink">
 																		<li><a class="dropdown-item"
@@ -188,86 +200,152 @@
 		<div class="container-fluid">
 			<div class="col-12">
 				<div class="container">
-					<h3 class="new-font-color text-col p-3 my-3" style="width:228px;">Popular
+					
+					<c:if test="${user!=null }">
+						<h3 class="new-font-color text-col p-3 my-3" style="width: 125px;">
 						Courses</h3>
-					<div class="row">
-						<div class="col-lg-3 col-md-6">
-							<div class="bluebox">
-								<div class="first-box boxes">
-									<div class="fast">
-										<img src="<%=request.getContextPath()%>/data/img/new1.jpg"
-											alt="bus" />
-										<p class="pt-4 text-col">Interested in studying
-											Networking? Browse on
-										<h4>Basic Networking course.</h4>
-										</p>
+							<div class="row">
+							<c:forEach var="items" items="${categorylist}">
+								<div class="col-lg-3 col-md-6">
+									<div class="bluebox">
+										<div class="first-box boxes">
+											<div class="fast">
+												<img src="<%=request.getContextPath()%>/upload_images/${items.img}"
+													alt="bus" />
+												<p class="pt-4 text-col">Interested in studying
+													
+												<p class="" style="font-weight: bold;">${items.title}</p>
+												<p class="">${items.price } <span class="px-1"> Kyats</span></p>
+												</p>
+											</div>
+											<div class="background-btn">
+												<c:if test="${user!=null}">
+													<a href="<%=request.getContextPath()%>/user/enroll.jsp">Enroll
+														Now</a>
+												</c:if>
+												<c:if test="${user==null}">
+													<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
+														Now</a>
+												</c:if>
+
+											</div>
+										</div>
 									</div>
-									<div class="background-btn">
-									<c:if test="${user!=null}"><a href="<%=request.getContextPath()%>/user/enroll.jsp">Enroll Now</a></c:if>
-									<c:if test="${user==null}"><a href="<%=request.getContextPath()%>/user/login.jsp">Enroll Now</a></c:if>
-									
+								</div>
+							</c:forEach>
+							</div>
+
+						
+					</c:if>
+					<c:if test="${user==null }">
+					<h3 class="new-font-color text-col p-3 my-3" style="width: 228px;">Popular
+						Courses</h3>
+						<div class="row">
+							<div class="col-lg-3 col-md-6">
+								<div class="bluebox">
+									<div class="first-box boxes">
+										<div class="fast">
+											<img src="<%=request.getContextPath()%>/data/img/new1.jpg"
+												alt="bus" />
+											<p class="pt-4 text-col">Interested in studying
+												Networking? Browse on
+											<h4>Basic Networking course.</h4>
+											</p>
+										</div>
+										<div class="background-btn">
+											<c:if test="${user!=null}">
+												<a href="<%=request.getContextPath()%>/user/enroll.jsp">Enroll
+													Now</a>
+											</c:if>
+											<c:if test="${user==null}">
+												<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
+													Now</a>
+											</c:if>
+
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="bluebox">
-								<div class="first-box boxes">
-									<div class="fast">
-										<img src="<%=request.getContextPath()%>/data/img/python.jpg"
-											alt="bus" />
-										<p class="pt-4 text-col">Interested in studying
-											Programming?Browse on
-										<h4>Python course.</h4>
-										</p>
-									</div>
-									<div class="background-btn">
-									<c:if test="${user!=null}"><a href="<%=request.getContextPath()%>/user/pythonEnroll.jsp">Enroll Now</a></c:if>
-									<c:if test="${user==null}"><a href="<%=request.getContextPath()%>/user/login.jsp">Enroll Now</a></c:if>
-									
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="bluebox">
-								<div class="first-box boxes">
-									<div class="fast">
-										<img src="<%=request.getContextPath()%>/data/img/about4.jpg"
-											alt="bus" />
-										<p class="pt-4 mb-0 text-col">Interested in studying
-											Business?Browse on
-										<h4>Business Administration course.</h4>
-										</p>
-									</div>
-									<div class="background-btn">
-									<c:if test="${user!=null}"><a href="<%=request.getContextPath()%>/user/baenroll.jsp">Enroll Now</a></c:if>
-									<c:if test="${user==null}"><a href="<%=request.getContextPath()%>/user/login.jsp">Enroll Now</a></c:if>
-									
+							<div class="col-lg-3 col-md-6">
+								<div class="bluebox">
+									<div class="first-box boxes">
+										<div class="fast">
+											<img src="<%=request.getContextPath()%>/data/img/python.jpg"
+												alt="bus" />
+											<p class="pt-4 text-col">Interested in studying
+												Programming?Browse on
+											<h4>Python course.</h4>
+											</p>
+										</div>
+										<div class="background-btn">
+											<c:if test="${user!=null}">
+												<a
+													href="<%=request.getContextPath()%>/user/pythonEnroll.jsp">Enroll
+													Now</a>
+											</c:if>
+											<c:if test="${user==null}">
+												<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
+													Now</a>
+											</c:if>
+
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="bluebox">
-								<div class="first-box boxes">
-									<div class="fast">
-										<img
-											src="<%=request.getContextPath()%>/data/img/accounting.jpg"
-											alt="bus" />
-										<p class="pt-4 text-col">Interested in studying
-											Finance?Browse on
-										<h4>Accounting course.</h4>
-										</p>
-									</div>
-									<div class="background-btn">
-									<c:if test="${user!=null}"><a href="<%=request.getContextPath()%>/user/acenroll.jsp">Enroll Now</a></c:if>
-									<c:if test="${user==null}"><a href="<%=request.getContextPath()%>/user/login.jsp">Enroll Now</a></c:if>
+							<div class="col-lg-3 col-md-6">
+								<div class="bluebox">
+									<div class="first-box boxes">
+										<div class="fast">
+											<img src="<%=request.getContextPath()%>/data/img/about4.jpg"
+												alt="bus" />
+											<p class="pt-4 mb-0 text-col">Interested in studying
+												Business?Browse on
+											<h4>Business Administration course.</h4>
+											</p>
+										</div>
+										<div class="background-btn">
+											<c:if test="${user!=null}">
+												<a href="<%=request.getContextPath()%>/user/baenroll.jsp">Enroll
+													Now</a>
+											</c:if>
+											<c:if test="${user==null}">
+												<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
+													Now</a>
+											</c:if>
+
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="bluebox">
+									<div class="first-box boxes">
+										<div class="fast">
+											<img
+												src="<%=request.getContextPath()%>/data/img/accounting.jpg"
+												alt="bus" />
+											<p class="pt-4 text-col">Interested in studying
+												Finance?Browse on
+											<h4>Accounting course.</h4>
+											</p>
+										</div>
+										<div class="background-btn">
+											<c:if test="${user!=null}">
+												<a href="<%=request.getContextPath()%>/user/acenroll.jsp">Enroll
+													Now</a>
+											</c:if>
+											<c:if test="${user==null}">
+												<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
+													Now</a>
+											</c:if>
+										</div>
+									</div>
+								</div>
+							</div>
+
 						</div>
-					</div>
+					</c:if>
+
 				</div>
 			</div>
 		</div>
@@ -495,7 +573,8 @@
 						<div class="row mt-5">
 
 							<div class="col-12 col-md-6">
-								<form action="<%=request.getContextPath() %>/MessageServlet" method="post">
+								<form action="<%=request.getContextPath()%>/MessageServlet"
+									method="post">
 									<div class="form-group">
 										<input type="text" name="cname" class="form-control"
 											placeholder="Name">

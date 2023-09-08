@@ -34,9 +34,9 @@
 	User admin = (User) session.getAttribute("admin");
 	CourseAccess ca = new CourseAccess();
 	List<Category> catlist = ca.showClass();
-	
-	
-    
+
+	//Category cat = ca.showClassobj();
+	//System.out.print("CLJSP" + cat.getTitle());
 	//String name = (String) session.getAttribute("name");
 	%>
 
@@ -85,7 +85,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/bankAccount.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
@@ -131,11 +131,13 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false"> <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false"> <img
+											src="<%=request.getContextPath()%>/upload_images/${admin.img}"
+											width="50" height="50" class="rounded-circle" /> <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/user/profile.jsp">Profile</a></li>
+												href="<%=request.getContextPath()%>/admin/profile.jsp">Profile</a></li>
 											<li><a class="dropdown-item"
 												href="<%=request.getContextPath()%>/UserLogoutServlet">Logout</a></li>
 										</ul>
@@ -168,13 +170,18 @@
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
-							<th>Image</th>
-							<th>Class</th>
+							<th>Logo</th>
+							<th>Class ID</th>
 							<th>Link</th>
 							<th>Created_Date</th>
 							<th>Controls</th>
 						</tr>
 
+						<tr>
+							<c:if test="${not empty noCourse}">
+								<div class="alert alert-danger ">Can Add Lectures</div>
+							</c:if>
+						</tr>
 						<c:forEach var="items" items="${courselist}">
 
 							<tr>
@@ -182,12 +189,11 @@
 								<td>${items.name}</td>
 								<td><img src="./upload_images/${items.img}" width="60"
 									height="60" /></td>
-									
-								<c:foreach var="catlists" items="${catlist }">
-								<c:if test="${items.type== catlists.id}">
-									<td>${catlist.title}</td>
-									</c:if>
-								</c:foreach>
+
+								<td>${items.type}</td>
+
+
+
 								<td>${items.link}</td>
 								<td>${items.date}</td>
 								<td class="d-flex"><a

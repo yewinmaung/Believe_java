@@ -53,16 +53,17 @@ public class CourseEditServlet extends HttpServlet {
 		course = ca.courseData(courseId);
 		System.out.println("Servlet"+course);
 		
-		response.setContentType("text/html");
-		request.setAttribute("course", course);
+		
 		
 			List<Category> list;
 			try {
 				list = ca.showClass();
 				 System.out.println(list);
+				    response.setContentType("text/html");
+					request.setAttribute("course", course);
 					request.setAttribute("categorylist", list);
-				RequestDispatcher rd = request.getRequestDispatcher("admin/coursedetail.jsp");
-				rd.forward(request, response);
+					RequestDispatcher rd = request.getRequestDispatcher("admin/coursedetail.jsp");
+					rd.forward(request, response);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

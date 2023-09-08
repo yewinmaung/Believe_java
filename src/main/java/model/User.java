@@ -2,6 +2,7 @@ package model;
 
 public class User {
 	int id;
+	String img;
 	String name;
 	String email;
 	String password;
@@ -9,9 +10,10 @@ public class User {
 public User() {
 	
 }
-public User(int id, String name, String email, String password, int type) {
+public User(int id, String name,String img, String email, String password, int type) {
 		super();
 		this.id = id;
+		this.img=img;
 		this.name = name;
 		this.email = email;
 		this.password = password;
@@ -24,6 +26,12 @@ public int getId() {
 		this.id = id;
 	}
 
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 public String getName() {
 	return name;
 }

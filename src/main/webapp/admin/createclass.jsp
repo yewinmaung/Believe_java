@@ -77,7 +77,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/bankAccount.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
@@ -113,7 +113,7 @@
 										<li class="breadcrumb-item "><a
 											href="<%=request.getContextPath()%>/admin/dashboard.jsp"
 											class="text-col text-decoration-none">Home</a></li>
-										
+
 										<li class="breadcrumb-item active text-col"
 											aria-current="page">Create Course</li>
 									</ol>
@@ -124,11 +124,13 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false"> <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false"> <img
+											src="<%=request.getContextPath()%>/upload_images/${admin.img}"
+											width="50" height="50" class="rounded-circle" /> <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/user/profile.jsp">Profile</a></li>
+												href="<%=request.getContextPath()%>/admin/profile.jsp">Profile</a></li>
 											<li><a class="dropdown-item"
 												href="<%=request.getContextPath()%>/UserLogoutServlet">Logout</a></li>
 										</ul>
@@ -155,7 +157,7 @@
 					</div>
 				</div>
 				<!--content Area Start-->
-<div class="container-fluid">
+				<div class="container-fluid">
 					<div class="col-12">
 						<div class="container">
 							<div class="row d-flex justify-content-center">
@@ -173,14 +175,16 @@
 													id="InputEmail" placeholder="Course Title">
 
 											</div>
-								
-											
+
+
 											<div class="col-md-12 col-12 my-1">
-											<label class="form-label text-col">Course Image</label>
-												<input type="file" name="cimg" class="form-control" placeholder="Image">
+												<label class="form-label text-col">Course Image</label> <input
+													type="file" name="cimg" class="form-control"
+													placeholder="Image">
 											</div>
 											<div class="col-md-12 col-12 mt-2">
-												<input type="text" name="price" class="form-control" placeholder="Price">
+												<input type="text" name="price" class="form-control"
+													placeholder="Price">
 											</div>
 										</div>
 										<div
@@ -192,10 +196,10 @@
 												class="btn btn-outline-warning text-col hovcol w-25">Create</button>
 
 										</div>
-										</form>
+									</form>
 								</div>
 
-								
+
 							</div>
 						</div>
 					</div>

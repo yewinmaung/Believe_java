@@ -12,6 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.connector.Response;
+
 import javax.servlet.http.*;
 
 import model.UserAccess;
@@ -50,17 +53,20 @@ public class PaymentServlet extends HttpServlet {
 		PaymentAccess pa=new PaymentAccess();
 		BankAccount ba=pa.enrollUser(name, email, account);
 	    
-        boolean isValid=pa.isValid(email,account,ba.getAmount());
+        boolean isValid=pa.isValid(email,account);
             boolean canJoin= pa.canJoin(email,account,ba.getAmount());
           
 		if(isValid) {
 			if(canJoin) {
 				boolean reduceAmount=pa.reduceAmount(name, email,account, ba.getAmount());
 				response.setContentType("text/html");
-				RequestDispatcher rd = request.getRequestDispatcher("user/index.jsp");
-				// out.println(" <div class=\"alert alert-danger \">Your Account is Invlid!</div>");
+				response.sendRedirect("LecturServlet");
+				//RequestDispatcher rd = request.getRequestDispatcher("user/video.jsp");
+				//out.println(" <div class=\"alert alert-danger \">Your Account is Invlid!</div>");
 				//request.setAttribute("loginError", "error");
-				rd.include(request, response);
+				//rd.include(request, response);
+				
+				//response.sendRedirect("LectureServlet");
 			}
 			else {
 				response.setContentType("text/html");

@@ -86,7 +86,7 @@ public class CourseAccess {
 		return flag;
 	}
 
-	public boolean updateCourse(String name, int type, String img, String link) {
+	public boolean updateCourse(int id,String name, int type, String img, String link) {
 
 		boolean flag = false;
 		Course course = new Course();
@@ -96,8 +96,7 @@ public class CourseAccess {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
-			PreparedStatement pmt = con
-					.prepareStatement("Update courses set name=?,image=?,type=?,links=?,updated_at=?");
+			PreparedStatement pmt = con.prepareStatement("Update courses set name=?,image=?,type=?,links=?,updated_at=? where id="+id);
 			pmt.setString(1, name);
 			pmt.setString(2, img);
 			pmt.setInt(3, type);
@@ -121,7 +120,33 @@ public class CourseAccess {
 		return flag;
 	}
 
-	// Show Create Course
+	// Show Create List type Course
+	
+	public Category showClassobj(int course_id) {
+		Category cat=new Category();
+		PreparedStatement pmt = null;
+		ResultSet rs = null;
+		Connection con;
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+			pmt = con.prepareStatement("select * from couses where classes.id="+course_id);
+			rs = pmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String title = rs.getString(2);
+				String img = rs.getString(3);
+				String price = rs.getString(4);
+				Timestamp date = rs.getTimestamp(5);
+				cat = new Category(id, title, img, price, date);
+			}
+			System.out.println("True"+rs.next());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cat;
+	}
 	public List<Category> showClass() throws ClassNotFoundException, SQLException {
 
 		PreparedStatement pmt = null;
@@ -171,7 +196,7 @@ public class CourseAccess {
 		return list;
 
 	}
-
+//
 	public Course courseData(String id) {
 		Course course = new Course();
 		boolean flag = false;
@@ -195,6 +220,7 @@ public class CourseAccess {
 				Timestamp date = new Timestamp(System.currentTimeMillis());
 				course = new Course(courseid, name, img, type, link, date);
 			}
+			System.out.println("for lds "+course);
 
 			con.close();
 		} catch (ClassNotFoundException e) {

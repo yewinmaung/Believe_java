@@ -2,12 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.User"%>
+<%@page import="model.BankAccount"%>
+<%@page import="model.PaymentAccess"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Dashboard</title>
+<title>Update Balance</title>
 <link rel="icon"
 	href="<%=request.getContextPath()%>/data/PNG/Artboard%201.png">
 <link rel="stylesheet"
@@ -29,9 +31,12 @@
 <body>
 	<%
 	User admin = (User) session.getAttribute("admin");
-	//System.out.print("AdminImg :"+admin.getImg());
 
-	//String name = (String) session.getAttribute("Admin");
+	BankAccount ba = new BankAccount();
+	PaymentAccess pa = new PaymentAccess();
+	//BankAccount user=(BankAccount)request.getAttribute("bankaccount");
+
+	int payId = Integer.parseInt(request.getParameter("paymentsid"));
 	%>
 	<section class="main container-fluid min-vh-100">
 		<div class="row">
@@ -54,7 +59,7 @@
 
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/admin/dashboard.jsp"
-							class="menu-item-link active"> <span> <i
+							class="menu-item-link"> <span> <i
 									class="feather-pie-chart"></i> Dashboard
 							</span>
 						</a></li>
@@ -66,7 +71,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/createclass.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create Course
 							</span>
@@ -79,7 +84,7 @@
 						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
-							class="menu-item-link"> <span> <i
+							class="menu-item-link active"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
 						</a></li>
@@ -108,10 +113,22 @@
 									<i class="feather-align-left text-col" style="font-size: 2em;"></i>
 								</button>
 
-								<nav aria-label="breadcrumb"></nav>
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb"
+										style="width: 310px; background: rgba(5, 5, 154, 0.86) !important;">
+										<li class="breadcrumb-item "><a
+											href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+											class="text-col text-decoration-none">Home</a></li>
+											<li class="breadcrumb-item "><a
+											href="<%=request.getContextPath()%>/ShowBankAccountServlet"
+											class="text-col text-decoration-none">Account</a></li>
+										<li class="breadcrumb-item active text-col"
+											aria-current="page">Add Amount</li>
+									</ol>
+								</nav>
+
 								<!-- Admin Profile -->
 								<c:if test="${admin!=null}">
-
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
@@ -129,7 +146,6 @@
 								</c:if>
 
 								<c:if test="${admin==null}">
-
 									<div class="dropdown">
 										<a class=" dropdown-toggle btn btn-outline-warning mb-2"
 											href="#" role="button" id="dropdownMenuLink"
@@ -137,7 +153,9 @@
 											SignUp/Login </a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/admin/alogin.jsp">Login</a></li>
+												href="<%=request.getContextPath()%>/user/register.jsp">Register</a></li>
+											<li><a class="dropdown-item"
+												href="<%=request.getContextPath()%>/user/login.jsp">Login</a></li>
 										</ul>
 									</div>
 								</c:if>
@@ -148,9 +166,73 @@
 					</div>
 				</div>
 				<!--content Area Start-->
+				<div class="row d-flex justify-content-center align-items-center">
+					<div class="p-0 m-0 d-flex col-12 col-md-12 col-lg-4 ">
 
-				<!--content Area Start-->
+						<form class="form-group w-100 own_bg mt-2 p-2"
+							action="<%=request.getContextPath()%>/UpdateBankAccountServlet"
+							method="post">
+							<c:if test="${not empty accountError}">
+								<div class="alert alert-danger ">Account is Vilid!</div>
+							</c:if>
+							<div class="w-100">
+								<img
+									src="<%=request.getContextPath()%>/data/SVG/Artboard%201.svg"
+									alt="" class="w-25 h-25">
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-6 col-lg-12">
+									<input type="hidden" class="" name="payid" placeholder="Name"
+										value="${ba.id}">
+								</div>
+								<div class="col-md-6 col-6 col-lg-12">
+									<input type="text" class="form-control" name="name"
+										placeholder="Name" value="${ba.name}">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 py-2">
+									<input type="email" class="form-control" name="email"
+										placeholder="E-mail" value="${ba.email }">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 pb-2">
+									<input type="text" class="form-control" name="account"
+										placeholder="AccountNo" value="${ba.accno }">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 col-12">
+									<input type="text" class="form-control" name="amount"
+										placeholder="Amount" value="${ba.amount }">
+								</div>
+							</div>
+
+							<div class="row pt-2">
+
+								<div
+									class="w-100 d-flex justify-content-end align-items-center py-3">
+
+									<button type="reset"
+										class="btn btn-outline-warning text-col hovcol w-25 mx-1">Cancel</button>
+									<button type="submit"
+										class="btn btn-outline-warning text-col hovcol w-25">Update</button>
+
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+
+
+					<!--content Area Start-->
+
+				</div>
 			</div>
+
+
+			<!--content Area Start-->
+		</div>
 		</div>
 		</div>
 		</div>

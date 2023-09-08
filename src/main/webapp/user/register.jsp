@@ -38,11 +38,11 @@
      
     <div class="row pt-2">
     <div class="">
-     <a href="user/login.jsp" class="text-warning text-decoration-none">SignIn</a>
+     <a href="<%=request.getContextPath() %>/user/login.jsp" class="text-warning text-decoration-none">SignIn</a>
      </div>
       <div class="d-flex justify-content-end">
-        <button class="btn btn-danger mx-1" type="reset">Cancel</button>
-        <button class="btn btn-warning" type="submit">Sign Up</button>
+        <button class="btn btn-outline-warning hovcol mx-1" type="reset">Cancel</button>
+        <button class="btn btn-outline-warning hovcol" type="submit">Sign Up</button>
       </div>
      </div>
    

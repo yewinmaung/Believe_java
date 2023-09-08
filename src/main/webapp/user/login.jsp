@@ -36,7 +36,7 @@
 
 
         <div class="d-flex justify-content-between align-items-center">
-             <a href="register.jsp" class="text-warning text-decoration-none">SignUp</a>
+             <a href="<%=request.getContextPath() %>/user/register.jsp" class="text-warning text-decoration-none">SignUp</a>
             <button class="btn btn-outline-warning hovcol w-50">Login</button>
         </div>
 

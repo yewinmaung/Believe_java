@@ -2,6 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.User"%>
+<%@page import="model.BankAccount"%>
+<%@page import="model.PaymentAccess"%>
+<%@page import="model.Category"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -27,10 +30,12 @@
 	href="<%=request.getContextPath()%>/css/enroll_course/style.css">
 </head>
 <body>
-<%
+	<%
 	User admin = (User) session.getAttribute("admin");
+	BankAccount ba = new BankAccount();
+	PaymentAccess pa = new PaymentAccess();
+	List<BankAccount> list = pa.showBankAccount();
 
-	//String name = (String) session.getAttribute("name");
 	%>
 	<section class="main container-fluid min-vh-100">
 		<div class="row">
@@ -65,7 +70,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/createclass.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-user-plus"></i> Create Course
 							</span>
@@ -77,7 +82,7 @@
 							</span>
 						</a></li>
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/bankAccount.jsp"
+							href="<%=request.getContextPath()%>/ShowBankAccountServlet"
 							class="menu-item-link active"> <span> <i
 									class="feather-user-plus"></i> Create BankAccount
 							</span>
@@ -110,7 +115,8 @@
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb"
 										style="width: 310px; background: rgba(5, 5, 154, 0.86) !important;">
-										<li class="breadcrumb-item "><a href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+										<li class="breadcrumb-item "><a
+											href="<%=request.getContextPath()%>/admin/dashboard.jsp"
 											class="text-col text-decoration-none">Home</a></li>
 										<li class="breadcrumb-item active text-col"
 											aria-current="page">Add Course</li>
@@ -122,11 +128,13 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false"> <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false"> <img
+											src="<%=request.getContextPath()%>/upload_images/${admin.getImg()}"
+											width="50" height="50" class="rounded-circle" /> <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
-												href="<%=request.getContextPath()%>/user/profile.jsp">Profile</a></li>
+												href="<%=request.getContextPath()%>/admin/profile.jsp">Profile</a></li>
 											<li><a class="dropdown-item"
 												href="<%=request.getContextPath()%>/UserLogoutServlet">Logout</a></li>
 										</ul>
@@ -154,55 +162,104 @@
 					</div>
 				</div>
 				<!--content Area Start-->
-				<div
-					class="d-flex justify-content-center align-items-center">
-					<form class="form-group w-50 own_bg"
-						action="<%=request.getContextPath()%>/CreateBankAccountServlet"
-						method="post">
-						<div class="w-100">
-							<img
-								src="<%=request.getContextPath()%>/data/SVG/Artboard%201.svg"
-								alt="" class="w-25 h-25">
-						</div>
+				<div class="row">
+					<div
+						class="p-0 m-0 d-flex col-12 col-md-12 col-lg-4 justify-content-center align-items-center">
 
-						<div class="row">
-							<div class="col-md-12 col-12">
-								<input type="text" class="form-control" name="name"
-									placeholder="Name">
-
+						<form class="form-group w-75 own_bg mt-2 p-2"
+							action="<%=request.getContextPath()%>/CreateBankAccountServlet"
+							method="post">
+							<c:if test="${not empty accountError}">
+								<div class="alert alert-danger ">Account is Vilid!</div>
+							</c:if>
+							<div class="w-100">
+								<img
+									src="<%=request.getContextPath()%>/data/SVG/Artboard%201.svg"
+									alt="" class="w-25 h-25">
 							</div>
-							<div class="col-md-12 col-12 py-2">
-								<input type="email" class="form-control" name="email"
-									placeholder="E-mail">
 
+							<div class="row">
+								<div class="col-md-6 col-6 col-lg-12">
+									<input type="text" class="form-control" name="name"
+										placeholder="Name">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 py-2">
+									<input type="email" class="form-control" name="email"
+										placeholder="E-mail">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 pb-2">
+									<input type="text" class="form-control" name="account"
+										placeholder="AccountNo">
+
+								</div>
+								<div class="col-md-6 col-6 col-lg-12 col-12">
+									<input type="text" class="form-control" name="amount"
+										placeholder="Amount">
+								</div>
 							</div>
-							<div class="col-md-12 col-12 py-2">
-								<input type="text" class="form-control" name="account"
-									placeholder="AccountNo">
 
+							<div class="row pt-2">
+
+								<div
+									class="w-100 d-flex justify-content-end align-items-center py-3">
+
+									<button type="reset"
+										class="btn btn-outline-warning text-col hovcol w-25 mx-1">Cancel</button>
+									<button type="submit"
+										class="btn btn-outline-warning text-col hovcol w-25">Create</button>
+
+								</div>
 							</div>
-							<div class="col-md-12 col-12">
-								<input type="text" class="form-control" name="amount"
-									placeholder="Amount">
-							</div>
-						</div>
 
-						<div class="row pt-2">
+						</form>
 
-							<div
-								class="w-100 d-flex justify-content-end align-items-center py-3">
+					</div>
+					<div class="p-0 m-0 col-12 col-md-12 col-lg-8 align-items-center">
+						<!--content Area Start-->
 
-								<button type="reset"
-									class="btn btn-outline-warning text-col hovcol w-25 mx-1">Cancel</button>
-								<button type="submit"
-									class="btn btn-outline-warning text-col hovcol w-25">Create</button>
+						<table class="table bg-white">
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>E-mail</th>
+								<th>Account-No</th>
+								<th>Amount</th>
+								<th>Created_Date</th>
+								<th>Controls</th>
+							</tr>
 
-							</div>
-						</div>
 
-					</form>
+							<c:if test="${not empty noAccount}">
+								<tr>
+									<div class="alert alert-danger w-25">Account are not
+										Exits</div>
+								</tr>
+							</c:if>
 
+							<c:forEach var="items" items="${accountList}">
+
+								<tr>
+									<td>${items.id}</td>
+									<td>${items.name}</td>
+									<td>${items.email}</td>
+									<td>${items.accno}</td>
+									<td>${items.amount}</td>
+									<td>${items.date}</td>
+									<td class="d-flex"><a
+										href="<%=request.getContextPath()%>/EditBankAccountServlet?paymentsid=${items.id}"
+										class="btn btn-outline-warning text-primary hovcol ">Edit</a></td>
+								</tr>
+							</c:forEach>
+
+						</table>
+
+						<!--content Area Start-->
+
+					</div>
 				</div>
+
 
 				<!--content Area Start-->
 			</div>

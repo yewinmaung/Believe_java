@@ -10,31 +10,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CourseAccess;
-import model.Category;
+
 import model.Course;
+import model.CourseAccess;
 
 /**
- * Servlet implementation class CourseListServlet
+ * Servlet implementation class LecturServlet
  */
-@WebServlet("/CourseListServlet")
-public class CourseListServlet extends HttpServlet {
+@WebServlet("/LecturServlet")
+public class LecturServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LecturServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CourseListServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CourseAccess ca = new CourseAccess();
 		RequestDispatcher rd = request.getRequestDispatcher("");
 		System.out.println("CourseListServlet Aung");
@@ -46,11 +44,11 @@ public class CourseListServlet extends HttpServlet {
 			if (list.size() > 0) {
 				request.setAttribute("courselist", list);
 				//request.setAttribute("catlist", catlist);
-				rd = request.getRequestDispatcher("admin/courselists.jsp");
+				rd = request.getRequestDispatcher("user/video.jsp");
 				rd.forward(request, response);
 			} else {
 				response.setContentType("text/html");
-				rd=request.getRequestDispatcher("admin/courselists.jsp");
+				rd=request.getRequestDispatcher("user/video.jsp");
 				request.setAttribute("noCourse","error");
 				rd.include(request, response);
 			}
@@ -58,16 +56,13 @@ public class CourseListServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
+}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

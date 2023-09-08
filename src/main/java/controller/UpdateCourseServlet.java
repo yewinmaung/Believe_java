@@ -59,6 +59,7 @@ public class UpdateCourseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
 		response.setContentType("text/html;charset=UTF-8");
 		String fileFolder = "upload_images";
 		String savePath = "D:\\Java\\Believe\\Believe1\\src\\main\\webapp" + File.separator + fileFolder;
@@ -70,12 +71,15 @@ public class UpdateCourseServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		System.out.println(name);
 		int type =Integer.parseInt(request.getParameter("type")) ;
+		System.out.println(type);
 		String link = request.getParameter("link");
+		System.out.println(link);
 		Part part = request.getPart("file");
 		String fileName = extractFileName(part);
 		CourseAccess ca = new CourseAccess();
-
-		boolean flag = ca.updateCourse(name, type, fileName, link);
+		int courseId =Integer.parseInt(request.getParameter("courseid")) ;
+		System.out.println(courseId);
+		boolean flag = ca.updateCourse(courseId,name, type, fileName, link);
          System.out.println("UCS"+flag);
 		if (flag) {
 
