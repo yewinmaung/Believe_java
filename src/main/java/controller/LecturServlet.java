@@ -35,7 +35,7 @@ public class LecturServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CourseAccess ca = new CourseAccess();
 		RequestDispatcher rd = request.getRequestDispatcher("");
-		System.out.println("CourseListServlet Aung");
+		
 		
 		 
 		try {

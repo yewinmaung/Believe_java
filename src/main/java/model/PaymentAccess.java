@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentAccess {
-	// Get Amount
+
+	
 	public BankAccount getBankAccount(String paymentid) {
 		BankAccount ba = new BankAccount();
 		boolean flag = false;
@@ -48,7 +49,8 @@ public class PaymentAccess {
 		}
 		return ba;
 	}
-
+  //Get Amount
+	
 	// Update Amount
 	public boolean updateAmount(String name, String email, String accno, int amount) throws ClassNotFoundException, SQLException {
 		boolean flag = false;
@@ -154,7 +156,7 @@ public class PaymentAccess {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		int newamount = amount - 30000;
+		int newamount = amount - 100000;
 		System.out.println(amount);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -184,6 +186,69 @@ public class PaymentAccess {
 	}
 
 //isValid
+	//account
+	public boolean validate(String account) {
+		boolean isValid = false;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			try {
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+				stmt = con.createStatement();
+				isValid = false;
+
+				rs = stmt.executeQuery("select * from payments where accno='" + account+"'");
+
+				while (rs.next()) {
+					isValid = true;
+				}
+
+				con.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return isValid;
+	}
+	public boolean isVilid(String email) {
+
+		boolean isValid = false;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			try {
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+				stmt = con.createStatement();
+				isValid = false;
+
+				rs = stmt.executeQuery("select * from payments where and email='"+email+"'");
+
+				while (rs.next()) {
+					isValid = true;
+				}
+
+				con.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return isValid;
+	}
+
 	public boolean isValid(String email, String account) {
 
 		boolean isValid = false;
@@ -197,7 +262,7 @@ public class PaymentAccess {
 				stmt = con.createStatement();
 				isValid = false;
 
-				rs = stmt.executeQuery("select * from payments where accno=" + account);
+				rs = stmt.executeQuery("select * from payments where accno='" + account+"'and email='"+email+"'");
 
 				while (rs.next()) {
 					isValid = true;

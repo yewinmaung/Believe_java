@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.User"%>
-
+<%@page import="model.Message"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +29,7 @@
 <body>
 	<%
 	User admin = (User) session.getAttribute("admin");
+
 	//System.out.print("AdminImg :"+admin.getImg());
 
 	//String name = (String) session.getAttribute("Admin");
@@ -53,28 +54,34 @@
 						<li class="menu-spacer"></li>
 
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+							href="<%=request.getContextPath()%>/CounterServlet"
 							class="menu-item-link active"> <span> <i
 									class="feather-pie-chart"></i> Dashboard
 							</span>
 						</a></li>
-
+						<li class="menu-item"><a
+							href="<%=request.getContextPath()%>/CategoryListServlet"
+							class="menu-item-link"> <span> <i
+									class="feather-folder"></i> Class List
+							</span>
+						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/CourseListServlet"
 							class="menu-item-link "> <span> <i
-									class="feather-user"></i> Course Lists
+									class="feather-file-text"></i> Course Lists
 							</span>
 						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/admin/createclass.jsp"
 							class="menu-item-link"> <span> <i
-									class="feather-user-plus"></i> Create Course
+									class="feather-folder-plus"></i> Create Class
 							</span>
 						</a></li>
+
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/ShowClassServlet"
 							class="menu-item-link"> <span> <i
-									class="feather-user-plus"></i> Add Course
+									class="feather-file-plus"></i> Add Course
 							</span>
 						</a></li>
 						<li class="menu-item"><a
@@ -148,17 +155,129 @@
 					</div>
 				</div>
 				<!--content Area Start-->
+				<div class=" container-fluid">
+					<div class="col-12">
+						<div class="container">
+							<div class="row">
+								<div class="col-12 col-md-6 col-lg-6 col-xl-3">
+									<div class="card mb-4 status-card">
+										<div class="card-body">
+											<div class="row align-items-center">
+												<div class="col-3">
+													<i class="feather-users h1 text-col1"></i>
+												</div>
+												<div class="col-9">
+													<p class="mb-1 h4 font-weight-bolder">
+														<span class="counter-up text-col1">${getUser.getCount()}</span>
+													</p>
+													<p class="mb-0 text-col1-50">Users</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6 col-lg-6 col-xl-3">
+									<div class="card mb-4 status-card">
+										<div class="card-body">
+											<div class="row align-items-center">
+												<div class="col-3">
+													<i class="feather-user-check h1 text-col1"></i>
+												</div>
+												<div class="col-9">
+													<p class="mb-1 h4 font-weight-bolder">
+														<span class="counter-up text-col1">${enrollCourse.getCount()}</span>
+													</p>
+													<p class="mb-0 text-col1-50">Enrolls</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6 col-lg-6 col-xl-3">
+									<div class="card mb-4 status-card">
+										<div class="card-body">
+											<div class="row align-items-center">
+												<div class="col-3">
+													<i class="feather-shield h1 text-col1"></i>
+												</div>
+												<div class="col-9">
+													<p class="mb-1 h4 font-weight-bolder">
+														<span class="counter-up text-col1">${classcount.getCount()}</span>
+													</p>
+													<p class="mb-0 text-col1-50">Classes</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6 col-lg-6 col-xl-3">
+									<div class="card mb-4 status-card">
+										<div class="card-body">
+											<div class="row align-items-center">
+												<div class="col-3">
+													<i class="feather-pocket h1 text-col1"></i>
+												</div>
+												<div class="col-9">
+													<p class="mb-1 h4 font-weight-bolder">
+														<span class="counter-up text-col1">${report.getCount()}</span>
+													</p>
+													<p class="mb-0 text-col1-50">Report</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 col-md-12">
+									<div>
+										<table class="table bg-light">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Name</th>
+													<th>E-mail</th>
+													<th>Message</th>
+													<th>Date</th>
+													<th>Action</th>
+												</tr>
 
-				<!--content Area Start-->
+											</thead>
+											<tbody>
+												<c:forEach var="items" items="${message}">
+													<tr>
+														<td>${items.id }</td>
+														<td>${items.name }</td>
+														<td>${items.email }</td>
+														<td>${items.message }</td>
+
+														<td>${items.date}</td>
+														<td>
+																<a href="mailto:${items.email }" class="btn btn-outline-primary">
+																	<i class="feather-mail "></i>
+																</a>
+
+															</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+
+							<!--content Area Start-->
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		</div>
-		</div>
 	</section>
 	<script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/all.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/own.js"></script>
+	<script src="<%=request.getContextPath()%>/js/Chart.min.js"></script>
 	<script src="https://static.elfsight.com/platform/platform.js"
 		data-use-service-core defer></script>
 

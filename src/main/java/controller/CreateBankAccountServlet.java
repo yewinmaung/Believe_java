@@ -48,21 +48,39 @@ public class CreateBankAccountServlet extends HttpServlet {
 		String account = request.getParameter("account");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		PaymentAccess pa = new PaymentAccess();
+		boolean isVilid=pa.isVilid(email);
+		boolean validate=pa.validate(account);
 		boolean isValid = pa.isValid(email, account);
 		
-	
-		if (isValid) {
-			response.setContentType("text/html");
+	    if(isVilid) {
+	    	response.setContentType("text/html");
 			RequestDispatcher rd = request.getRequestDispatcher("ShowBankAccountServlet");
 			request.setAttribute("accountError", "error");
-			rd.include(request, response);
-		} else {
-			boolean cba = pa.createBankAccount(name, email, account, amount);
-			
-			if (cba) {
-				response.sendRedirect("ShowBankAccountServlet");
-			}
-		}
+			rd.include(request, response);	
+	    }else {
+	    	  if(validate) {
+	  	    	response.setContentType("text/html");
+	  			RequestDispatcher rd = request.getRequestDispatcher("ShowBankAccountServlet");
+	  			request.setAttribute("accountError", "error");
+	  			rd.include(request, response);
+	  	    }
+	  	    else {
+	  	    	if (isValid) {
+	  				response.setContentType("text/html");
+	  				RequestDispatcher rd = request.getRequestDispatcher("ShowBankAccountServlet");
+	  				request.setAttribute("accountError", "error");
+	  				rd.include(request, response);
+	  			} else {
+	  				boolean cba = pa.createBankAccount(name, email, account, amount);
+	  				
+	  				if (cba) {
+	  					response.sendRedirect("ShowBankAccountServlet");
+	  				}
+	  			}	
+	  	    }
+	  		
+	    }
+	  
 		
 		
 		

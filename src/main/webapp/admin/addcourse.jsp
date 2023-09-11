@@ -31,9 +31,6 @@
 <body>
 	<%
 	User admin = (User) session.getAttribute("admin");
-
-
-	
 	%>
 	<section class="main container-fluid min-vh-100">
 		<div class="row">
@@ -55,28 +52,34 @@
 						<li class="menu-spacer"></li>
 
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/dashboard.jsp"
-							class="menu-item-link "> <span> <i
+							href="<%=request.getContextPath()%>/CounterServlet"
+							class="menu-item-link"> <span> <i
 									class="feather-pie-chart"></i> Dashboard
 							</span>
 						</a></li>
-
+						<li class="menu-item"><a
+							href="<%=request.getContextPath()%>/CategoryListServlet"
+							class="menu-item-link"> <span> <i
+									class="feather-folder"></i> Class List
+							</span>
+						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/CourseListServlet"
 							class="menu-item-link "> <span> <i
-									class="feather-user"></i> Course Lists
+									class="feather-file-text"></i> Course Lists
 							</span>
 						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/admin/createclass.jsp"
 							class="menu-item-link"> <span> <i
-									class="feather-user-plus"></i> Create Course
+									class="feather-folder-plus"></i> Create Class
 							</span>
 						</a></li>
+
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/ShowClassServlet"
 							class="menu-item-link active"> <span> <i
-									class="feather-user-plus"></i> Add Course
+									class="feather-file-plus"></i> Add Course
 							</span>
 						</a></li>
 						<li class="menu-item"><a
@@ -113,7 +116,8 @@
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb"
 										style="width: 310px; background: rgba(5, 5, 154, 0.86) !important;">
-										<li class="breadcrumb-item "><a href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+										<li class="breadcrumb-item "><a
+											href="<%=request.getContextPath()%>/CounterServlet"
 											class="text-col text-decoration-none">Home</a></li>
 										<li class="breadcrumb-item active text-col"
 											aria-current="page">Add Course</li>
@@ -125,11 +129,9 @@
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-outline-warning mb-1"
 											href="#" role="button" id="dropdownMenuLink"
-											data-bs-toggle="dropdown" aria-expanded="false">
-											<img
-																		src="<%=request.getContextPath()%>/upload_images/${admin.img}"
-																		width="50" height="50" class="rounded-circle" />
-											 <%=admin.getName()%>
+											data-bs-toggle="dropdown" aria-expanded="false"> <img
+											src="<%=request.getContextPath()%>/upload_images/${admin.img}"
+											width="50" height="50" class="rounded-circle" /> <%=admin.getName()%>
 										</a>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 											<li><a class="dropdown-item"
@@ -188,21 +190,23 @@
 													<option value="Accounting">Accounting</option>
 
 												</select> -->
-												
+
 												<select required class="form-select" name="type">
-												<c:forEach var="items" items="${categorylist}">
-												<c:out value="${categorylist }">${categorylist }</c:out>
-												<option value="${items.id}">${items.title}</option>
-												</c:forEach>
+													<c:forEach var="items" items="${categorylist}">
+														<c:out value="${categorylist }">${categorylist }</c:out>
+														<option value="${items.id}">${items.title}</option>
+													</c:forEach>
 												</select>
-												
+
 											</div>
-											
+
 											<div class="col-md-12 col-12">
-												<input required type="file" name="file" class="form-control" placeholder="Image">
+												<input required type="file" name="file" class="form-control"
+													placeholder="Image">
 											</div>
 											<div class="col-md-12 col-12 mt-2">
-												<input required type="text" name="link" class="form-control" placeholder="Lecture Link">
+												<input required type="text" name="link" class="form-control"
+													placeholder="Lecture Link">
 											</div>
 										</div>
 										<div
@@ -214,10 +218,10 @@
 												class="btn btn-outline-warning text-col hovcol w-25">Create</button>
 
 										</div>
-										</form>
+									</form>
 								</div>
 
-								
+
 							</div>
 						</div>
 					</div>

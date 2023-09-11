@@ -19,18 +19,18 @@
 	href="<%=request.getContextPath()%>/css/all.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/card.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/style.css"></head>
+	href="<%=request.getContextPath()%>/css/style.css">
+</head>
 <body>
 	<%
 	User user = (User) session.getAttribute("user");
 	CourseAccess ca = new CourseAccess();
-	List<Category> catlist = ca.showClass();
-	
+
 	//String name = (String) session.getAttribute("name");
 	%>
 
 
-<header class="container-fluid position-fixed own_bg"
+	<header class="container-fluid position-fixed own_bg"
 		style="z-index: 1;">
 		<div class="col-12">
 			<div class="container">
@@ -107,12 +107,20 @@
 
 											</div>
 
-											<nav aria-label="breadcrumb" style="background-color:rgba(5, 5, 154, 0.86)!important;">
-                                                <ol class="breadcrumb new-font-color p-2" style="width: 130px;">
-                                                    <li class="breadcrumb-item "><a href="<%=request.getContextPath()%>/UserClassShowServlet" class="text-col text-decoration-none">Home</a></li>
-                                                   <li class="breadcrumb-item active text-col" aria-current="page">${catlist.name }</li>
-                                                </ol>
-                                            </nav>
+											<nav aria-label="breadcrumb"
+												style="">
+												<ol class="breadcrumb  p-2"
+													style="width: 230px;">
+													<li class="breadcrumb-item "><a
+														href="<%=request.getContextPath()%>/UserClassShowServlet"
+														class="text-col text-decoration-none">Home</a></li>
+													
+													
+													<li class="breadcrumb-item active text-col"
+														aria-current="page">${categorylist.title }</li>
+														
+												</ol>
+											</nav>
 										</div>
 									</div>
 
@@ -135,19 +143,18 @@
 		<div class="row">
 			<!--        sidebar start-->
 
-			<div class="col-12 col-lg-3 col-xl-2 min-vh-100 sidebar">
+			<div class="col-12 col-lg-3 col-xl-2 sidebar">
+				
 
-
-				<div class="nav-menu">
-					
-				</div>
+					<div class="nav-menu">
+						
+					</div>
+				
 			</div>
 			<!--        sidebar end-->
 			<div class="col-12 col-lg-9 col-xl-10 min-vh-100 content-course">
 
-				<div class="row w-100">
-					<div class="col-12"></div>
-				</div>
+				<div class="row w-100"></div>
 				<!--content Area Start-->
 				<div class="container-fluid">
 					<div class="col-12">
@@ -160,15 +167,22 @@
 
 									</div>
 									<div class="row">
-									<div class="col-12"></div>
+										<div class="col-12"></div>
+
 										<c:forEach var="items" items="${courselist}">
+
 											<div class="card text-center my-2">
-												<div class="card-header">${items.name }</div>
+												<div class="card-header d-flex justify-content-start">
+													<h4>${items.name}</h4>
+												</div>
 												<div class="card-body">
 													<h5 class="card-title"></h5>
-													<iframe width="560" height="315" src="${items.link }" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-													</div>
-												<div class="card-footer text-muted">${items.date }</div>
+													<iframe width="560" height="315" src="${items.link }"
+														title="YouTube video player" frameborder="0"
+														allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+														allowfullscreen></iframe>
+												</div>
+												<div class="card-footer text-muted"><span>Updated at : </span> ${items.date }</div>
 											</div>
 										</c:forEach>
 										<!--carousel-->

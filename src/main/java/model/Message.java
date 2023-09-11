@@ -1,11 +1,14 @@
 package model;
 
+import java.sql.Timestamp;
+
 public class Message {
 	int id;
 
 String name;
 String email;
 String message;
+Timestamp date;
 
 public Message() {
 	
@@ -15,6 +18,14 @@ public Message(String name, String email, String message) {
 	this.name = name;
 	this.email = email;
 	this.message = message;
+}
+public Message(int id, String name, String email, String message, Timestamp date) {
+	super();
+	this.id=id;
+	this.name = name;
+	this.email = email;
+	this.message = message;
+	this.date=date;
 }
 public int getId() {
 	return id;
@@ -39,6 +50,12 @@ public String getMessage() {
 }
 public void setMessage(String message) {
 	this.message = message;
+}
+public Timestamp getDate() {
+	return date;
+}
+public void setDate(Timestamp date) {
+	this.date = date;
 }
 
 

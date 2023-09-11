@@ -3,6 +3,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.User"%>
+<%@page import="model.Enroll"%>
+<%@page import="model.EnrollAccess"%>
 <%@page import="model.CourseAccess"%>
 <%@page import="model.Category"%>
 
@@ -27,6 +29,8 @@
 <body>
 	<%
 	User user = (User) session.getAttribute("user");
+	//boolean stu = (boolean) session.getAttribute("stu");
+	//System.out.print("INestu"+stu.getName());
 	//CourseAccess ca = new CourseAccess();
 
 	// System.out.print("User Img"+user.getImg());
@@ -200,46 +204,70 @@
 		<div class="container-fluid">
 			<div class="col-12">
 				<div class="container">
-					
+
 					<c:if test="${user!=null }">
+
+
 						<h3 class="new-font-color text-col p-3 my-3" style="width: 125px;">
-						Courses</h3>
-							<div class="row">
+							Courses</h3>
+
+
+
+						<div class="row">
 							<c:forEach var="items" items="${categorylist}">
 								<div class="col-lg-3 col-md-6">
 									<div class="bluebox">
 										<div class="first-box boxes">
 											<div class="fast">
-												<img src="<%=request.getContextPath()%>/upload_images/${items.img}"
+												<img
+													src="<%=request.getContextPath()%>/upload_images/${items.img}"
 													alt="bus" />
 												<p class="pt-4 text-col">Interested in studying
-													
 												<p class="" style="font-weight: bold;">${items.title}</p>
-												<p class="">${items.price } <span class="px-1"> Kyats</span></p>
+												<p class="">${items.price }
+													<span class="px-1"> Kyats</span>
+												</p>
 												</p>
 											</div>
 											<div class="background-btn">
 												<c:if test="${user!=null}">
-													<a href="<%=request.getContextPath()%>/user/enroll.jsp">Enroll
-														Now</a>
+													<form method="post"
+														action="<%=request.getContextPath()%>/EnrollServlet"
+														class="d-flex justify-content-center"
+														style="width: 500px;">
+														<!-- class id and user id -->
+														<input type="hidden" value="${user.id }"
+															class="form-control" required name="userid"
+															aria-describedby="emailHelp"> <input
+															type="hidden" value="${items.id }" class="form-control"
+															required name="classid" aria-describedby="emailHelp">
+														<button type="submit"
+															class="btn btn-outline-warning text-col hovcol w-50">
+															View Course</button>
+
+													</form>
+													
 												</c:if>
+
 												<c:if test="${user==null}">
-													<a href="<%=request.getContextPath()%>/user/login.jsp">Enroll
-														Now</a>
+													<a href="<%=request.getContextPath()%>/user/login.jsp">View Course</a>
 												</c:if>
+
+
+
 
 											</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
-							</div>
+						</div>
 
-						
+
 					</c:if>
 					<c:if test="${user==null }">
-					<h3 class="new-font-color text-col p-3 my-3" style="width: 228px;">Popular
-						Courses</h3>
+						<h3 class="new-font-color text-col p-3 my-3" style="width: 228px;">Popular
+							Courses</h3>
 						<div class="row">
 							<div class="col-lg-3 col-md-6">
 								<div class="bluebox">
@@ -253,6 +281,7 @@
 											</p>
 										</div>
 										<div class="background-btn">
+
 											<c:if test="${user!=null}">
 												<a href="<%=request.getContextPath()%>/user/enroll.jsp">Enroll
 													Now</a>

@@ -1,4 +1,5 @@
 <%@page import="model.User"%>
+<%@page import="model.EnrollAccess"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -19,6 +20,8 @@
 	User user = (User) session.getAttribute("user");
     
 	String name = (String) session.getAttribute("name");
+	//int classid=(Integer)request.getAttribute("classid");
+	//System.out.print("In enroll "+classid);
 	%>
 	<header class="container-fluid position-fixed own_bg"
 		style="z-index: 1;">
@@ -125,6 +128,10 @@
                   <div class="col-12">
                       <div class="d-flex justify-content-center align-items-center">
                           <form method="post" action="<%=request.getContextPath() %>/PaymentServlet" class="form-control own_bg px-3" style="width: 500px;">
+                               <!-- class id and user id -->
+                               <input type="hidden" value="${user.id }" class="form-control" required name="userid" aria-describedby="emailHelp">
+                                 <input type="hidden" value="${classid }" class="form-control" required name="classid" aria-describedby="emailHelp">
+                              <!-- class id and user id -->
                               <div class="d-flex w-100 justify-content-center align-items-center">
                                   <img src="<%=request.getContextPath() %>/data/SVG/Artboard%201.svg" alt="" class="w-50 h-50">
 

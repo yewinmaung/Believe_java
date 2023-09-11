@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Category;
 import model.CourseAccess;
+import model.Enroll;
+import model.EnrollAccess;
+import model.User;
 
 /**
  * Servlet implementation class UserClassShowServlet
@@ -21,45 +24,52 @@ import model.CourseAccess;
 @WebServlet("/UserClassShowServlet")
 public class UserClassShowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserClassShowServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 CourseAccess ca=new CourseAccess();
-		    RequestDispatcher rd = request.getRequestDispatcher("");
-		    PrintWriter pt=response.getWriter();
-		   // pt.println("Welcome UCSJ");
-		    try {
-				List<Category> list = ca.showClass();
-	              System.out.println("scs:"+list);
-				if (list.size() > 0) {
-					request.setAttribute("categorylist", list);
-					rd = request.getRequestDispatcher("user/index.jsp");
-					
-					rd.forward(request, response);
-				} else {
-					request.setAttribute("noCourse","No course");
-					response.sendRedirect("display.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public UserClassShowServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		CourseAccess ca = new CourseAccess();
+		RequestDispatcher rd = request.getRequestDispatcher("");
+		PrintWriter pt = response.getWriter();
+		
+		// pt.println("Welcome UCSJ");
+		try {
+			List<Category> list = ca.showClass();
+			System.out.println("scs:" + list);
+			if (list.size() > 0) {
+
+				request.setAttribute("categorylist", list);
+
+				rd = request.getRequestDispatcher("user/index.jsp");
+
+				rd.forward(request, response);
+			} else {
+				request.setAttribute("noCourse", "No course");
+				response.sendRedirect("user/index.jsp");
 			}
-		    }
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

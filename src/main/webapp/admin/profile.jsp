@@ -51,28 +51,34 @@
 						<li class="menu-spacer"></li>
 
 						<li class="menu-item"><a
-							href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+							href="<%=request.getContextPath()%>/CounterServlet"
 							class="menu-item-link"> <span> <i
 									class="feather-pie-chart"></i> Dashboard
 							</span>
 						</a></li>
-
+						<li class="menu-item"><a
+							href="<%=request.getContextPath()%>/CategoryListServlet"
+							class="menu-item-link"> <span> <i
+									class="feather-folder"></i> Class List
+							</span>
+						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/CourseListServlet"
 							class="menu-item-link "> <span> <i
-									class="feather-user"></i> Course Lists
+									class="feather-file-text"></i> Course Lists
 							</span>
 						</a></li>
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/admin/createclass.jsp"
 							class="menu-item-link"> <span> <i
-									class="feather-user-plus"></i> Create Course
+									class="feather-folder-plus"></i> Create Class
 							</span>
 						</a></li>
+
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/ShowClassServlet"
 							class="menu-item-link"> <span> <i
-									class="feather-user-plus"></i> Add Course
+									class="feather-file-plus"></i> Add Course
 							</span>
 						</a></li>
 						<li class="menu-item"><a
@@ -86,8 +92,8 @@
 
 						<li class="menu-item"><a
 							href="<%=request.getContextPath()%>/admin/profile.jsp"
-							class="menu-item-link active"> <span> <i
-									class="feather-edit"></i> Edit Profile
+							class="menu-item-link active"> <span> <i class="feather-edit"></i>
+									Edit Profile
 							</span>
 						</a></li>
 					</ul>
@@ -110,7 +116,7 @@
 									<ol class="breadcrumb"
 										style="width: 310px; background: rgba(5, 5, 154, 0.86) !important;">
 										<li class="breadcrumb-item "><a
-											href="<%=request.getContextPath()%>/admin/dashboard.jsp"
+											href="<%=request.getContextPath()%>/CounterServlet"
 											class="text-col text-decoration-none">Home</a></li>
 										<li class="breadcrumb-item active text-col"
 											aria-current="page">Profile</li>

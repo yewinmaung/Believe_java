@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Part;
 
 import java.util.*;
@@ -50,7 +51,7 @@ public class CourseAccess {
 		boolean flag = false;
 		Course course = new Course();
 		Category category = new Category();
-		
+
 		Statement stmt = null;
 		ResultSet rs = null;
 
@@ -62,7 +63,7 @@ public class CourseAccess {
 				pmt.setInt(1, course.getId());
 				pmt.setString(2, name);
 				pmt.setString(3, img);
-				
+
 				pmt.setInt(4, type);
 
 				pmt.setString(5, link);
@@ -86,7 +87,41 @@ public class CourseAccess {
 		return flag;
 	}
 
-	public boolean updateCourse(int id,String name, int type, String img, String link) {
+///
+	public boolean updateCategory(int id, String title, String img, String price) {
+		boolean flag = false;
+		Course course = new Course();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+			PreparedStatement pmt = con
+					.prepareStatement("Update classes set name=?,image=?,price=?,updated_at=? where id='" + id + "'");
+
+			pmt.setString(1, title);
+			pmt.setString(2, img);
+			pmt.setString(3, price);
+			Timestamp date = new Timestamp(System.currentTimeMillis());
+			pmt.setTimestamp(4, date);
+
+			int i = pmt.executeUpdate();
+			if (i > 0) {
+				flag = true;
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	//
+	public boolean updateCourse(int id, String name, int type, String img, String link) {
 
 		boolean flag = false;
 		Course course = new Course();
@@ -96,7 +131,8 @@ public class CourseAccess {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
-			PreparedStatement pmt = con.prepareStatement("Update courses set name=?,image=?,type=?,links=?,updated_at=? where id="+id);
+			PreparedStatement pmt = con
+					.prepareStatement("Update courses set name=?,image=?,type=?,links=?,updated_at=? where id=" + id);
 			pmt.setString(1, name);
 			pmt.setString(2, img);
 			pmt.setInt(3, type);
@@ -121,15 +157,15 @@ public class CourseAccess {
 	}
 
 	// Show Create List type Course
-	
+
 	public Category showClassobj(int course_id) {
-		Category cat=new Category();
+		Category cat = new Category();
 		PreparedStatement pmt = null;
 		ResultSet rs = null;
 		Connection con;
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
-			pmt = con.prepareStatement("select * from couses where classes.id="+course_id);
+			pmt = con.prepareStatement("select * from couses where classes.id=" + course_id);
 			rs = pmt.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt(1);
@@ -139,14 +175,45 @@ public class CourseAccess {
 				Timestamp date = rs.getTimestamp(5);
 				cat = new Category(id, title, img, price, date);
 			}
-			System.out.println("True"+rs.next());
+			System.out.println("True" + rs.next());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return cat;
 	}
+
+	public Category showdetailClass(int classid) {
+		Category list = new Category();
+		PreparedStatement pmt = null;
+		ResultSet rs = null;
+		Connection con;
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+			pmt = con.prepareStatement(
+					"SELECT classes.* FROM `courses`,classes WHERE classes.id=courses.type and courses.type='" + classid
+							+ "'");
+			rs = pmt.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String title = rs.getString(2);
+				String img = rs.getString(3);
+				String price = rs.getString(4);
+				Timestamp date = rs.getTimestamp(5);
+				list = new Category(id, title, img, price, date);
+
+			}
+			System.out.println("CAS" + rs.next());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
 	public List<Category> showClass() throws ClassNotFoundException, SQLException {
 
 		PreparedStatement pmt = null;
@@ -168,6 +235,35 @@ public class CourseAccess {
 			list.add(c);
 		}
 		System.out.println(rs.next());
+		return list;
+	}
+
+//detailLecture
+	public List<Course> detailLecture(int classid) {
+		boolean flag = false;
+		Course course = new Course();
+		PreparedStatement pmt = null;
+		ResultSet rs = null;
+		ArrayList<Course> list = new ArrayList<>();
+
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+			pmt = con.prepareStatement("SELECT * FROM `courses` WHERE courses.type=" + classid);
+
+			rs = pmt.executeQuery();
+			Course c;
+			while (rs.next()) {
+				c = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5),
+						rs.getTimestamp(6));
+				list.add(c);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("List ca" + list);
+
 		return list;
 	}
 
@@ -196,7 +292,59 @@ public class CourseAccess {
 		return list;
 
 	}
-//
+
+//Delete Course
+	public void DeleteCourse(int courseid) {
+		PreparedStatement pmt = null;
+		Connection con;
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+			ArrayList<Course> list = new ArrayList<>();
+			pmt = con.prepareStatement("Delete  from courses where id='" + courseid + "'");
+			 pmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void DeleteClass(int classid) throws ClassNotFoundException, SQLException {
+		boolean flag = false;
+		PreparedStatement pmt = null;
+		ResultSet rs = null;
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+		ArrayList<Category> list = new ArrayList<>();
+		pmt = con.prepareStatement("Delete  from classes where id='" + classid + "'");
+		 pmt.execute();
+
+	}
+
+	// detailCategory
+	public Category showDetailClass(int classid) throws ClassNotFoundException, SQLException {
+		Category c = new Category();
+		PreparedStatement pmt = null;
+		ResultSet rs = null;
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost/j2eepj", "root", "");
+
+		ArrayList<Category> list = new ArrayList<>();
+		pmt = con.prepareStatement("select * from classes where id='" + classid + "'");
+		rs = pmt.executeQuery();
+
+		while (rs.next()) {
+			int id = rs.getInt(1);
+			String title = rs.getString(2);
+			String img = rs.getString(3);
+			String price = rs.getString(4);
+			Timestamp date = rs.getTimestamp(5);
+			c = new Category(id, title, img, price, date);
+			list.add(c);
+		}
+		System.out.println(rs.next());
+		return c;
+	}
+
+	// end detailCategory
+	//
 	public Course courseData(String id) {
 		Course course = new Course();
 		boolean flag = false;
@@ -220,7 +368,7 @@ public class CourseAccess {
 				Timestamp date = new Timestamp(System.currentTimeMillis());
 				course = new Course(courseid, name, img, type, link, date);
 			}
-			System.out.println("for lds "+course);
+			System.out.println("for lds " + course);
 
 			con.close();
 		} catch (ClassNotFoundException e) {

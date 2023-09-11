@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Enroll;
+import model.EnrollAccess;
 import model.User;
 import model.UserAccess;
+
+
 
 /**
  * Servlet implementation class UserLoginServlet
@@ -64,30 +68,37 @@ public class UserLoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		UserAccess ua = new UserAccess();
+		
 		PrintWriter out = response.getWriter();
 
 		User user = ua.loginUser(email, password);
+		
 		boolean isValid = ua.isValid(email, password);
-
+		EnrollAccess ea=new EnrollAccess();
+        boolean flag=ea.stu(user.getId());
+        System.out.println("Book"+flag);
 		int type = 0;
 
 		HttpSession session = request.getSession(true);
-
+		
 		if (isValid) {
 
 			if (user.getType() == 0) {
-
+				
+				//session.setAttribute("stu", stu);
 				session.setAttribute("user", user);
+			    session.setAttribute("stu", flag);
 				response.setContentType("text/html");
 				response.sendRedirect("UserClassShowServlet");
 				//RequestDispatcher rd = request.getRequestDispatcher("user/index.jsp");
 				//rd.forward(request, response);
-
+				
 			} else if (user.getType() == 1) {
 				session.setAttribute("admin", user);
-
-				RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
-				rd.forward(request, response);
+				response.setContentType("text/html");
+				response.sendRedirect("CounterServlet");
+				//RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
+				//rd.forward(request, response);
 
 			}
 
